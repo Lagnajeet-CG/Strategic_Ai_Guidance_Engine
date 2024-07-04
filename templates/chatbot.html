@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <title>EcommBot</title>
+    <style>
+        /* Variables for consistent design */
+        :root {
+            --chat-bg-color: #f9fbfd;
+            --chat-bubble-radius: 15px;
+            --user-color: #5b7dec;
+            --bot-color: #2196F3;
+            --input-bg-color: #ffffff;
+            --send-button-color: #ff9800;
+            --send-button-hover-color: #fb8c00;
+            --header-bg-color: #3c89f4;
+            --header-text-color: #0f0000;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        /* Chat container styling */
+        #chat-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            max-width: 800px;
+            margin: 0;
+            border: none;
+            border-radius: 15px;
+            background-color: var(--chat-bg-color);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Header styling */
+        #chat-header {
+            background: var(--header-bg-color);
+            padding: 15px;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 500;
+            color: var(--header-text-color);
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        /* Chat history styling */
+        #chat-history {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: var(--chat-bg-color);
+            color: #333;
+            margin: 0;
+        }
+
+        /* Styling for each message bubble */
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: var(--chat-bubble-radius);
+            font-size: 16px;
+            word-wrap: break-word;
+        }
+
+        /* User message styling */
+        .user-message {
+            background-color: var(--user-color);
+            align-self: flex-end;
+            color: #fff;
+            margin-left: auto;
+        }
+
+        /* Bot message styling */
+        .bot-response {
+            background-color: var(--bot-color);
+            align-self: flex-start;
+            color: #fff;
+            margin-right: auto;
+        }
+
+        /* Input container styling */
+        #user-input-container {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: var(--input-bg-color);
+            border-top: 1px solid #ddd;
+        }
+
+        /* Input field styling */
+        #user-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 16px;
+            margin-right: 10px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        /* Input field focus styling */
+        #user-input:focus {
+            border-color: var(--bot-color);
+        }
+
+        /* Send button styling */
+        #send-button {
+            padding: 10px 20px;
+            border: none;
+            background-color: var(--send-button-color);
+            color: white;
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        /* Hover effect for send button */
+        #send-button:hover {
+            background-color: var(--send-button-hover-color);
+        }
+
+        /* Live Agent Button styling */
+        #live-agent-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto;
+            padding: 12px 20px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        #live-agent-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        #live-agent-button span {
+            z-index: 1;
+            margin-right: 10px;
+        }
+
+        #live-agent-button .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        #live-agent-button:hover .icon {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Scrollbar customization */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background-color: #f0f5f9;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #ddd;
+            border-radius: 8px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            body {
+                flex-direction: column;
+            }
+
+            #chat-container {
+                height: 100vh;
+                width: 100vw;
+                max-width: none;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-header">
+            EcommBot🤖
+        </div>
+        <div id="chat-history">
+            <!-- Chat history will be dynamically added here -->
+        </div>
+        <div id="user-input-container">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
+        </div>
+        <a href="http://127.0.0.1:5000/customer" id="live-agent-button">
+            <span>Connect with Live Agent</span>
+            <div class="icon">
+                <i class="fas fa-headset"></i>
+            </div>
+        </a>
+    </div>
+
+    <!-- Add Font Awesome for the icon -->
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+
+    <script type="module">
+        import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+    
+        const API_KEY = "AIzaSyB2Ap-o973pkpyvPaKiktbZwd4LX1FxU2c";
+        const genAI = new GoogleGenerativeAI(API_KEY);
+    
+        // Initialize conversation variable
+        let conversation = "";
+    
+        async function sendMessage(prompt) {
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+            const result = await model.generateContent(prompt);
+            const response = await result.response;
+            let text = response.text();
+    
+            // Remove asterisks from the text
+            text = text.replace(/\*/g, '');
+    
+            // Handle bold formatting
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/\*(.*?)\*/g, '&ast;$1&ast;');
+    
+            const chatHistory = document.getElementById("chat-history");
+            const messageContainer = document.createElement("div");
+            messageContainer.className = "message bot-response";
+            messageContainer.innerHTML = text;
+    
+            chatHistory.appendChild(messageContainer);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+    
+            // Add agent response to conversation
+            conversation += `Bot🤖: ${text}\n`;
+        }
+    
+        function handleSendMessage() {
+            const userInput = document.getElementById("user-input").value;
+    
+            // Add user input to conversation
+            conversation += `user: ${userInput}\n`;
+    
+            // Add contextual information to the user input
+            const context = `Act as customer service support (agent) complete the chat between customer and agent. User has some queries, please provide answers based on their data. User data = { 
+        "customer": { 
+            "id": 26751, 
+            "name": "Bishnu Haldar", 
+            "email": "John.wick@wi.com", 
+            "phone": "+44-457-7860", 
+            "address": "96 Bakers St, Brenville, London, 56721", 
+            "orders": [
+                { "product_name": "Wrigley's Orbit 2-in-1 flavour", "product_price": 50.00, "currency": "GBP", "order_total": 100.00, "order_date": "2024-01-01", "original_delivery_date": "2024-06-25", "delivery_status": "On the way", "order_id": "ORD12345", "tracking_number": "TRK12345", "customer_notes": "Leave at the front porch if no one is home." },
+                { "product_name": "Sony WH-1000XM4 Wireless Headphones", "product_price": 299.00, "currency": "GBP", "order_total": 299.00, "order_date": "2024-05-15", "original_delivery_date": "2024-06-01", "delivery_status": "Delivered", "order_id": "ORD12346", "tracking_number": "TRK12346", "customer_notes": "Please handle with care. Fragile item." },
+                { "product_name": "Apple MacBook Air M2", "product_price": 999.00, "currency": "GBP", "order_total": 1049.00, "order_date": "2024-03-22", "original_delivery_date": "2024-04-10", "delivery_status": "Returned", "order_id": "ORD12347", "tracking_number": "TRK12347", "customer_notes": "Defective item, returning for replacement." },
+                { "product_name": "Nike Air Max 270", "product_price": 150.00, "currency": "GBP", "order_total": 150.00, "order_date": "2024-06-20", "original_delivery_date": "2024-06-27", "delivery_status": "Pending", "order_id": "ORD12348", "tracking_number": "TRK12348", "customer_notes": "Ensure delivery before my vacation." }
+            ] 
+        } 
+    }, conversation between user and agent=  `;
+    
+            const last = "should be in like a short way to give the answers.current date=24 june 2024. give the complete response in a language in wich user is asking question";
+            const combinedInput = context + conversation + last;
+    
+            const chatHistory = document.getElementById("chat-history");
+    
+            const userMessageContainer = document.createElement("div");
+            userMessageContainer.className = "message user-message";
+            userMessageContainer.textContent = userInput;
+    
+            chatHistory.appendChild(userMessageContainer);
+            sendMessage(combinedInput);
+            document.getElementById("user-input").value = "";
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+    
+        document.getElementById("send-button").addEventListener("click", handleSendMessage);
+    
+        document.getElementById("user-input").addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                handleSendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
