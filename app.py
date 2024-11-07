@@ -107,7 +107,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # App title and description
-st.markdown('<h1>Conversational Datalake🤖</h1>', unsafe_allow_html=True)
+st.markdown('<h1>Strategic AI Guidance Engine🤖</h1>', unsafe_allow_html=True)
 
 # Path to your logo
 logo_path2 = "Screenshot 2024-06-26 210943.png"
@@ -191,14 +191,17 @@ country_query = f"""
 # Slider to set limit of result
 
 # Sidebar for chart type selection
-st.sidebar.subheader("Chart Type")
-chart_types = {
-    "Bar Chart": st.sidebar.checkbox("Bar Chart"),
-    "Pie Chart": st.sidebar.checkbox("Pie Chart"),
-    "Line Chart": st.sidebar.checkbox("Line Chart"),
-    "Histogram": st.sidebar.checkbox("Histogram"),
-    "Radar Chart": st.sidebar.checkbox("Radar Chart")
-}
+# st.sidebar.subheader("Chart Type")
+# chart_types = {
+#     "Bar Chart": st.sidebar.checkbox("Bar Chart"),
+#     "Pie Chart": st.sidebar.checkbox("Pie Chart"),
+#     "Line Chart": st.sidebar.checkbox("Line Chart"),
+#     "Histogram": st.sidebar.checkbox("Histogram"),
+#     "Radar Chart": st.sidebar.checkbox("Radar Chart")
+# }
+
+st.sidebar.radio('',['Finance','Supply chain',
+'Revenue growth','IT ops', 'SDLC'])
 
 limit = st.sidebar.slider('Limit Of Output', 0, 100, 10)
 
