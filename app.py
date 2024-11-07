@@ -110,11 +110,11 @@ st.markdown("""
 st.markdown('<h1>Strategic AI Guidance Engine🤖</h1>', unsafe_allow_html=True)
 
 # # Path to your logo
-# logo_path2 = "SAGE.png"
+logo_path2 = "SAGE.png"
 
 # Display the logo in the sidebar
-# st.sidebar.image(logo_path2, use_column_width=True)
-st.sidebar.title('SAGE')
+st.sidebar.image(logo_path2, use_column_width=True)
+# st.sidebar.title('SAGE')
 
 # Initialize session state for messages
 if "messages" not in st.session_state:
