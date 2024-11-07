@@ -1,4 +1,11 @@
-Flask
-Flask-SocketIO
+streamlit
+matplotlib
+pandas
+google-cloud-bigquery
+google-auth
+google-auth-oauthlib
+plotly
+numpy
+altair
 google-generativeai
-Gunicorn
+db-dtypes
