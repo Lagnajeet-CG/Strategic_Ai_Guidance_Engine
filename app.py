@@ -207,7 +207,13 @@ st.sidebar.radio('',['Finance','Supply chain',
 # limit = st.sidebar.slider('Limit Of Output', 0, 100, 10)
 
 questions=['what are the potential options to reduce churn by 2%','what are the options to bring down marketing costs','key options to increase customer satisfaction','how to increase customer acquisition by 20%','how to reduce acquisition cost','how to increase retention','increase market share & profitability','what was the total sales revenue for the last quarter','can you segment our customers based on their purchase frequency','what are our most frequent purchasers buying that our least frequent purchasers aren’t',
-           'are there any other distinguishing factors between the purchase frequency segments','what is the overall sentiment of our customer reviews','can you summarize the key points of feedback from our customer reviews','is there any missing data or other questions that we should be asking for customer feedback on that could improve analysis']
+           'are there any other distinguishing factors between the purchase frequency segments','what is the overall sentiment of our customer reviews','can you summarize the key points of feedback from our customer reviews','is there any missing data or other questions that we should be asking for customer feedback on that could improve analysis',
+          'What are top 3 levers to reduce capital expenditures for our biggest projects'
+          'Please provide key short-term and long-term cost reduction initiatives that and associated cost reduction potential',
+          'What are the key factors for margin improvement in the next 3 quarters',
+          'Highlight the key impediments impacting the enforcement of internal controls for finance',
+          'Summarize the internal finance audit findings and associated potential for reducing the compliance costs',
+          '']
 answers="""
 #########################################################################
 
