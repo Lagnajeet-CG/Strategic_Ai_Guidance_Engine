@@ -201,8 +201,7 @@ country_query = f"""
 #     "Radar Chart": st.sidebar.checkbox("Radar Chart")
 # }
 
-st.sidebar.radio('',['Finance','Supply chain',
-'Revenue growth','IT ops', 'SDLC'])
+st.sidebar.radio('',['Finance', 'Revenue Growth Management', 'Supply Chain', 'SDLC & IT ops'])
 
 # limit = st.sidebar.slider('Limit Of Output', 0, 100, 10)
 
