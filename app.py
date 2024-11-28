@@ -8,7 +8,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 
-# Configure the OpenAI API
+# Configure the Gemini API
 key = "AIzaSyB2Ap-o973pkpyvPaKiktbZwd4LX1FxU2c"
 genai.configure(api_key=key)
 generation_config = {
